@@ -1,0 +1,21 @@
+::ng-deep {
+ .p-selectbutton .p-button {
+    border-radius: 0px !important;
+    justify-content: center !important;
+    border-radius: 0px !important;
+    justify-content: center !important;
+    border: 1px solid #ced4da !important;
+    margin-right: 15px !important;
+    margin-bottom: 15px !important;
+  }
+
+  .fadeIn-left {
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0;transform: translateX(100px); }
+    to { opacity: 1;transform: translateX(0px); }
+  }
+}

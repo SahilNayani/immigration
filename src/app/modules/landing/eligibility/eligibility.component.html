@@ -1,0 +1,292 @@
+<header class="shadow-lg sticky- top-0 z-40">
+  <div class="container px-6 py-6 mx-auto flex items-center justify-center">
+    <a href="#"><img class="w-auto h-44" src="/assets/images/globalGatewayVertical.png" alt="Global Gateway Immigration Logo" /></a>
+  </div>
+</header>
+
+<section class="py-8 md:py-12 xl:py-20 bg-primary/20">
+  <div class="max-w-screen-2xl md:px-5 mx-auto">
+    <div class="w-full space-y-3 text-center pb-12">
+      <h2>Book free counselling session!</h2>
+      <p>Please fill the form to understand you better and setup session accordingly.</p>
+    </div>
+    <div [formGroup]="eligibilityForm" class="max-w-screen-lg w-full mx-auto">
+      <div class="flex flex-wrap">
+        <div class="w-full px-4 pb-5">
+          <h3 class="text-xl font-semibold">We're eager to gather additional information about you in order to tailor your study abroad journey.</h3>
+        </div>
+        <div class="w-full px-4 fadeIn-left">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium text-black">
+              Choose your dream country
+            </label>
+            <p-dropdown styleClass="w-full" [formControlName]="'preferredCountry'" [options]="countries" optionLabel="name" [showClear]="true" placeholder="Select a Country" (onClear)="resetForm()" (onChange)="onCountryChange($event)">
+              <ng-template pTemplate="selectedItem">
+                <div class="flex items-center gap-4" *ngIf="preferredCountryCtrl.value">
+                  <img *ngIf="preferredCountryCtrl.value && preferredCountryCtrl.value.code != ''" src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + preferredCountryCtrl.value.code.toLowerCase()"/>
+                  <div>{{ preferredCountryCtrl.value?.name }}</div>
+                </div>
+              </ng-template>
+              <ng-template let-country pTemplate="item">
+                <div class="flex items-center gap-4">
+                  <img *ngIf="country.code != ''" src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + country.code.toLowerCase()"/>
+                  <div>{{ country.name }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="flex flex-wrap" *ngIf="preferredCountryCtrl.value && preferredCountryCtrl.value.name" ngClass=""> -->
+      <div class="flex flex-wrap" [ngClass]="preferredCountryCtrl.value && preferredCountryCtrl.value.name ? 'fadeIn-left' : 'hidden'">
+        <div class="w-full px-4 pb-5">
+          <h3 class="text-xl font-semibold">May Has A Higher Acceptance Rate</h3>
+        </div>
+        <div class="w-full px-4">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium text-black">
+              What is purpose to visit?
+            </label>
+            <div class="flex flex-wrap gap-3 w-full">
+              <p-selectButton [options]="preferredVisitArr" [formControlName]="'purposeVisit'" optionLabel="icon" optionValue="key" class="w-full" [styleClass]="'w-full'" (onChange)="onEducationSelectionChange()">
+                <ng-template let-pIntake pTemplate>
+                  <span>{{pIntake?.name}}</span>
+                </ng-template>
+              </p-selectButton>
+            </div>
+          </div>
+        </div>
+        <div class="w-full px-4" [ngClass]="purposeVisitCtrl.value == 'work_permit' || purposeVisitCtrl.value == 'study' ? 'fadeIn-left' : 'hidden'">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium text-black">
+              Could you please specify your preferred intake period?
+            </label>
+            <div class="flex flex-wrap gap-3 w-full">
+              <p-selectButton [options]="intakePeriodArr" [formControlName]="'preferredIntake'" [(ngModel)]="eligibilityNgModel.preferredIntakeModel" optionLabel="icon" optionValue="value" class="w-full" [styleClass]="'w-full'">
+                <ng-template let-pIntake pTemplate>
+                  <span>{{pIntake?.name}}</span>
+                </ng-template>
+              </p-selectButton>
+            </div>
+          </div>
+        </div>
+        <div class="w-full px-4" *ngIf="purposeVisitCtrl.value == 'study'">
+          <div class="mb-5" [ngClass]="eligibilityNgModel.preferredIntakeModel ? 'fadeIn-left' : 'hidden'">
+            <label class="mb-3 block text-base font-medium text-black">
+              What field of study are you interested in pursuing?
+            </label>
+            <div class="flex flex-wrap gap-3 w-full">
+              <p-selectButton [options]="pursuingArr" [formControlName]="'preferredProgram'" [(ngModel)]="eligibilityNgModel.preferredProgramModel" optionLabel="icon" optionValue="key" class="w-full" [styleClass]="'w-full'">
+                <ng-template let-pIntake pTemplate>
+                  <span>{{pIntake?.name}}</span>
+                </ng-template>
+              </p-selectButton>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-wrap" [ngClass]="eligibilityNgModel.preferredProgramModel ? 'fadeIn-left' : 'hidden'" *ngIf="preferredCountryCtrl.value && preferredCountryCtrl.value.name && purposeVisitCtrl.value == 'work_permit' || purposeVisitCtrl.value == 'study'">
+        <div class="w-full px-4 pb-5">
+          <h3 class="text-xl font-semibold">Education</h3>
+        </div>
+        
+        <div class="w-full px-4">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium text-black">
+              What's your highest level of education?
+            </label>
+            <div class="flex flex-wrap gap-3 w-full">
+              <p-selectButton [options]="educationLevelArr" [formControlName]="'highestLevelEducation'" [(ngModel)]="eligibilityNgModel.highestLevelEducationModel" optionLabel="icon" optionValue="value" class="w-full" [styleClass]="'w-full'">
+                <ng-template let-pIntake pTemplate>
+                  <span>{{pIntake?.name}}</span>
+                </ng-template>
+              </p-selectButton>
+            </div>
+          </div>
+        </div>
+        <div class="w-full px-4" [ngClass]="eligibilityForm.get('highestLevelEducation').value ? 'fadeIn-left' : 'hidden'">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium text-black">
+              Percentage
+            </label>
+            <div class="relative">
+              <input [formControlName]="'grades'" type="number" [(ngModel)]="eligibilityNgModel.gradesModel" class="w-full rounded-md border border-form-stroke p-3 text-black placeholder-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]" minlength="0" maxlength="99">
+            </div>
+          </div>
+        </div>
+        <div class="w-full px-4" [ngClass]="eligibilityNgModel.gradesModel ? 'fadeIn-left' : 'hidden'">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium text-black">
+              Year of graduation?
+            </label>
+            <div class="flex flex-wrap gap-3 w-full">
+              <p-dropdown [options]="graduationYearArr" [formControlName]="'highestEducationPassoutYear'" [(ngModel)]="eligibilityNgModel.highestEducationPassoutYearModel" optionLabel="name" optionValue="value" class="w-full" [styleClass]="'w-full'"></p-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="w-full px-4" [ngClass]="eligibilityNgModel.highestEducationPassoutYearModel ? 'fadeIn-left' : 'hidden'">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium text-black">
+              Do you have a valid Passport?
+            </label>
+            <div class="flex flex-wrap gap-3 w-full">
+              <p-selectButton [options]="passportStatusArr" [formControlName]="'passportStatus'" [(ngModel)]="eligibilityNgModel.passportStatusModel" optionLabel="icon" optionValue="value" class="w-full" [styleClass]="'w-full'">
+                <ng-template let-pIntake pTemplate>
+                  <span>{{pIntake?.name}}</span>
+                </ng-template>
+              </p-selectButton>
+            </div>
+          </div>
+        </div>
+        <div class="w-full px-4" [ngClass]="eligibilityNgModel.passportStatusModel ? 'fadeIn-left' : 'hidden'">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium text-black">
+              Language test
+            </label>
+            <div class="relative z-20 bg-white">
+                <span class="absolute top-1/2 left-4 -translate-y-1/2">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g opacity="0.8">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.0007 2.50065C5.85852 2.50065 2.50065 5.85852 2.50065 10.0007C2.50065 14.1428 5.85852 17.5007 10.0007 17.5007C14.1428 17.5007 17.5007 14.1428 17.5007 10.0007C17.5007 5.85852 14.1428 2.50065 10.0007 2.50065ZM0.833984 10.0007C0.833984 4.93804 4.93804 0.833984 10.0007 0.833984C15.0633 0.833984 19.1673 4.93804 19.1673 10.0007C19.1673 15.0633 15.0633 19.1673 10.0007 19.1673C4.93804 19.1673 0.833984 15.0633 0.833984 10.0007Z" fill="#637381"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0.833984 9.99935C0.833984 9.53911 1.20708 9.16602 1.66732 9.16602H18.334C18.7942 9.16602 19.1673 9.53911 19.1673 9.99935C19.1673 10.4596 18.7942 10.8327 18.334 10.8327H1.66732C1.20708 10.8327 0.833984 10.4596 0.833984 9.99935Z" fill="#637381"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.50084 10.0008C7.55796 12.5632 8.4392 15.0301 10.0006 17.0418C11.5621 15.0301 12.4433 12.5632 12.5005 10.0008C12.4433 7.43845 11.5621 4.97153 10.0007 2.95982C8.4392 4.97153 7.55796 7.43845 7.50084 10.0008ZM10.0007 1.66749L9.38536 1.10547C7.16473 3.53658 5.90275 6.69153 5.83417 9.98346C5.83392 9.99503 5.83392 10.0066 5.83417 10.0182C5.90275 13.3101 7.16473 16.4651 9.38536 18.8962C9.54325 19.069 9.76655 19.1675 10.0007 19.1675C10.2348 19.1675 10.4581 19.069 10.6159 18.8962C12.8366 16.4651 14.0986 13.3101 14.1671 10.0182C14.1674 10.0066 14.1674 9.99503 14.1671 9.98346C14.0986 6.69153 12.8366 3.53658 10.6159 1.10547L10.0007 1.66749Z" fill="#637381"></path>
+                      </g>
+                  </svg>
+                </span>
+                <select [formControlName]="'englishTest'" [(ngModel)]="eligibilityNgModel.englishTestModel" class="relative z-20 w-full appearance-none rounded-md border border-form-stroke bg-transparent py-3 px-12 text-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]">
+                  <option value=""></option>
+                  <option value="not_decided">Not decided</option>
+                  <option value="already_gave_the_exam">Already gave the exam</option>
+                  <option value="booked_my_exam">Booked my exam</option>
+                  <option value="planning_to_give_the_exam_in_next_2_months">Planning to give the exam in next 2 months</option>
+                </select>
+                <span class="absolute top-1/2 right-4 z-10 -translate-y-1/2">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g opacity="0.8">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z" fill="#637381"></path>
+                      </g>
+                  </svg>
+                </span>
+            </div>
+          </div>
+        </div>
+        <div class="w-full px-4" [ngClass]="eligibilityNgModel.englishTestModel ? 'fadeIn-left' : 'hidden'">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium text-black">
+              Language Grads
+            </label>
+            <div class="relative">
+              <input [formControlName]="'englishTestGrades'" [(ngModel)]="eligibilityNgModel.englishTestGradesModel" type="number" class="w-full rounded-md border border-form-stroke p-3 text-black placeholder-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]">
+            </div>
+          </div>
+        </div>
+        <div class="w-full px-4" [ngClass]="eligibilityNgModel.englishTestGradesModel ? 'fadeIn-left' : 'hidden'">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium text-black">
+              Do you already have a university admit?
+            </label>
+            <div class="relative z-20 bg-white">
+                <select [formControlName]="'admitStatus'" [(ngModel)]="eligibilityNgModel.admitStatusModel" class="relative z-20 w-full appearance-none rounded-md border border-form-stroke bg-transparent p-3 text-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]">
+                  <option value=""></option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+                <span class="absolute top-1/2 right-4 z-10 -translate-y-1/2">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g opacity="0.8">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z" fill="#637381"></path>
+                      </g>
+                  </svg>
+                </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-wrap" [ngClass]="(preferredCountryCtrl.value && preferredCountryCtrl.value.name && validateEductionForm() || eligibilityNgModel.admitStatusModel) ? 'fadeIn-left' : 'hidden'" *ngIf="preferredCountryCtrl.value && preferredCountryCtrl.value.name && validateEductionForm()">
+        <div class="w-full px-4 pb-5">
+          <h3 class="text-xl font-semibold">Contact Details</h3>
+        </div>
+  
+        <div class="w-full px-4">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium text-black">
+            Name
+            </label>
+            <div class="relative">
+              <input [formControlName]="'name'" type="text" placeholder="Devid Jhon" class="w-full rounded-md border border-form-stroke p-3 pl-12 text-black placeholder-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]">
+              <span class="absolute top-1/2 left-4 -translate-y-1/2">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g opacity="0.8">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.72039 12.8864C4.50179 12.105 5.5616 11.666 6.66667 11.666H13.3333C14.4384 11.666 15.4982 12.105 16.2796 12.8864C17.061 13.6678 17.5 14.7276 17.5 15.8327V17.4993C17.5 17.9596 17.1269 18.3327 16.6667 18.3327C16.2064 18.3327 15.8333 17.9596 15.8333 17.4993V15.8327C15.8333 15.1696 15.5699 14.5338 15.1011 14.0649C14.6323 13.5961 13.9964 13.3327 13.3333 13.3327H6.66667C6.00363 13.3327 5.36774 13.5961 4.8989 14.0649C4.43006 14.5338 4.16667 15.1696 4.16667 15.8327V17.4993C4.16667 17.9596 3.79357 18.3327 3.33333 18.3327C2.8731 18.3327 2.5 17.9596 2.5 17.4993V15.8327C2.5 14.7276 2.93899 13.6678 3.72039 12.8864Z" fill="#637381"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.0007 3.33268C8.61994 3.33268 7.50065 4.45197 7.50065 5.83268C7.50065 7.21339 8.61994 8.33268 10.0007 8.33268C11.3814 8.33268 12.5006 7.21339 12.5006 5.83268C12.5006 4.45197 11.3814 3.33268 10.0007 3.33268ZM5.83398 5.83268C5.83398 3.5315 7.69946 1.66602 10.0007 1.66602C12.3018 1.66602 14.1673 3.5315 14.1673 5.83268C14.1673 8.13387 12.3018 9.99935 10.0007 9.99935C7.69946 9.99935 5.83398 8.13387 5.83398 5.83268Z" fill="#637381"></path>
+                  </g>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="w-full px-4">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium text-black">
+            Email
+            </label>
+            <div class="relative">
+              <input [formControlName]="'email'" type="email" placeholder="info@yourmai.com" class="w-full rounded-md border border-form-stroke p-3 pl-12 text-black placeholder-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]">
+              <span class="absolute top-1/2 left-4 -translate-y-1/2">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g opacity="0.8">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.33398 4.16667C2.87756 4.16667 2.50065 4.54357 2.50065 5V15C2.50065 15.4564 2.87756 15.8333 3.33398 15.8333H16.6673C17.1238 15.8333 17.5007 15.4564 17.5007 15V5C17.5007 4.54357 17.1238 4.16667 16.6673 4.16667H3.33398ZM0.833984 5C0.833984 3.6231 1.95708 2.5 3.33398 2.5H16.6673C18.0442 2.5 19.1673 3.6231 19.1673 5V15C19.1673 16.3769 18.0442 17.5 16.6673 17.5H3.33398C1.95708 17.5 0.833984 16.3769 0.833984 15V5Z" fill="#637381"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0.984696 4.52154C1.24862 4.14449 1.76823 4.0528 2.14527 4.31673L10.0007 9.81554L17.8562 4.31673C18.2332 4.0528 18.7528 4.14449 19.0167 4.52154C19.2807 4.89858 19.189 5.41818 18.8119 5.68211L10.4786 11.5154C10.1917 11.7163 9.80977 11.7163 9.52284 11.5154L1.1895 5.68211C0.812463 5.41818 0.720767 4.89858 0.984696 4.52154Z" fill="#637381"></path>
+                  </g>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="w-full px-4">
+          <div class="mb-5">
+            <label class="mb-3 block text-base font-medium text-black">
+              Contact No.
+            </label>
+            <div class="relative">
+              <input [formControlName]="'phone'" type="text" placeholder="99663 32255" class="w-full rounded-md border border-form-stroke p-3 pl-12 text-black placeholder-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]">
+              <span class="absolute top-1/2 left-4 -translate-y-1/2">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g opacity="0.8">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.33398 6.66667C2.87375 6.66667 2.50065 7.03976 2.50065 7.5V15.8333C2.50065 16.2936 2.87375 16.6667 3.33398 16.6667H16.6673C17.1276 16.6667 17.5007 16.2936 17.5007 15.8333V7.5C17.5007 7.03976 17.1276 6.66667 16.6673 6.66667H3.33398ZM0.833984 7.5C0.833984 6.11929 1.95327 5 3.33398 5H16.6673C18.048 5 19.1673 6.11929 19.1673 7.5V15.8333C19.1673 17.214 18.048 18.3333 16.6673 18.3333H3.33398C1.95327 18.3333 0.833984 17.214 0.833984 15.8333V7.5Z" fill="#637381"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6.56622 2.39825C7.03506 1.92941 7.67094 1.66602 8.33398 1.66602H11.6673C12.3304 1.66602 12.9662 1.92941 13.4351 2.39825C13.9039 2.86709 14.1673 3.50297 14.1673 4.16602V17.4993C14.1673 17.9596 13.7942 18.3327 13.334 18.3327C12.8737 18.3327 12.5006 17.9596 12.5006 17.4993V4.16602C12.5006 3.945 12.4129 3.73304 12.2566 3.57676C12.1003 3.42048 11.8883 3.33268 11.6673 3.33268H8.33398C8.11297 3.33268 7.90101 3.42048 7.74473 3.57676C7.58845 3.73304 7.50065 3.945 7.50065 4.16602V17.4993C7.50065 17.9596 7.12755 18.3327 6.66732 18.3327C6.20708 18.3327 5.83398 17.9596 5.83398 17.4993V4.16602C5.83398 3.50297 6.09738 2.86709 6.56622 2.39825Z" fill="#637381"></path>
+                  </g>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full">
+          <button class="w-full px-6 py-2.5 text-sm font-medium tracking-wider text-white transition-colors duration-300 transform md:w-auto md:mx-4 focus:outline-none bg-primary rounded-lg hover:bg-gray-700" (click)="getOtp()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="fixed inset-0 w-full h-full flex items-center justify-center z-20" *ngIf="getOtpPop">
+  <span class="fixed inset-0 bg-black/30 backdrop-blur-md"></span>
+  <div class="relative bg-gray-100 rounded-md max-w-md w-full p-8">
+    <div class="flex flex-col">
+      <div class="w-full px-4 pb-5">
+        <div class="flex items-start justify-between mb-1">
+          <h3 class="text-xl font-semibold">Verification</h3>
+          <svg class="w-5 h-5 cursor-pointer hover:opacity-70 hover:rotate-90 transition-all duration-300" (click)="getOtp()" viewBox="0 -0.5 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>close [#1511]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-419.000000, -240.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <polygon id="close-[#1511]" points="375.0183 90 384 98.554 382.48065 100 373.5 91.446 364.5183 100 363 98.554 371.98065 90 363 81.446 364.5183 80 373.5 88.554 382.48065 80 384 81.446"> </polygon> </g> </g> </g> </g></svg>
+        </div>
+        <p>You will get a OTP via SMS</p>
+      </div>
+      <div class="w-full px-4 pb-5">
+        <input type="text" pInputText formControlName="text" class="w-full px-4 py-2 text-xl tracking-widest border border-gray-400" />
+      </div>
+      <div class="w-full pb-5">
+        <button class="w-full px-6 py-2.5 text-sm font-medium tracking-wider text-white transition-colors duration-300 transform md:w-auto md:mx-4 focus:outline-none bg-primary rounded-lg hover:bg-gray-700">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

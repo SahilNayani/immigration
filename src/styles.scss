@@ -1,0 +1,38 @@
+// Google Fonts
+// @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+
+// PrimeNG CSS
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+// Tailwind CSS
+@tailwind base;
+@tailwind components;
+
+html, body {@apply scroll-smooth overflow-x-hidden;}
+
+body {@apply font-primary tracking-wider text-xs md:text-sm xl:text-base;}
+
+.anim {@apply transition-all duration-300;}
+
+// Titles
+h1 {@apply text-2xl md:text-3xl xl:text-5xl xl:leading-snug font-black;}
+h2 {@apply text-2xl md:text-3xl xl:text-5xl xl:leading-snug font-black;}
+
+p {@apply text-xs md:text-sm lg:text-base 2xl:text-lg;}
+
+/* button */
+.btn {@apply text-sm xl:text-base tracking-wide font-semibold px-5 md:px-8 py-3 rounded-lg active:shadow-md;}
+.btn-primary {@apply bg-primary hover:bg-primary-hover text-white;}
+.btn-secondary {@apply bg-secondary hover:bg-secondary-hover text-white;}
+
+@tailwind utilities;
+
+@media only screen and (max-width: 700px) {
+  .slick-dots {@apply w-auto bottom-auto top-5 left-auto right-5;}
+}
+
+.slick-dots li button:before {@apply text-lg text-secondary opacity-100 border-2 border-primary hover:border-white rounded-full leading-4 transition-all duration-300;}
+.slick-dots li.slick-active button:before {@apply text-primary opacity-100;}
