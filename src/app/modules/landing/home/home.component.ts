@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
       colorTitle: 'Global Gateway Immigration',
       description: "Are you dreaming of a new life in a foreign land? At Global Gateway Immigration, we specialize in making those dreams a reality. With our expert guidance and comprehensive immigration services, we’re here to help you navigate the complex world of immigration.",
       btnUrl: "/eligibility",
-      image: '/assets/images/hero/welcome.png'
+      image: '/assets/images/hero/welcome.webp'
     },{
       id: '1002',
       subTitle: "Jan'24 Intake is opening soon!",
@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
       colorTitle: 'the United Kingdom.',
       description: "Book a free counselling session & find out universities where you can get an admit.",
       btnUrl: "/eligibility/UK",
-      image: '/assets/images/hero/uk.png'
+      image: '/assets/images/hero/uk.webp'
     },{
       id: '1003',
       subTitle: "Jan'24 Intake is opening soon!",
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
       colorTitle: 'the Canada.',
       description: "Book a free counselling session & find out universities where you can get an admit.",
       btnUrl: "/eligibility/CA",
-      image: '/assets/images/hero/canada.png'
+      image: '/assets/images/hero/canada.webp'
     },{
       id: '1003',
       subTitle: "Jan'24 Intake is opening soon!",
@@ -42,31 +42,31 @@ export class HomeComponent implements OnInit {
       colorTitle: 'the United States of America.',
       description: "Book a free counselling session & find out universities where you can get an admit.",
       btnUrl: "/eligibility/US",
-      image: '/assets/images/hero/usa.png'
+      image: '/assets/images/hero/usa.webp'
     },
   ];
   universities: any = [
     {
       id: '1001',
-      universityLogo: '/assets/images/university/logo/bpp.jpeg',
+      universityLogo: '/assets/images/university/logo/bpp.webp',
       name: 'BPP University',
-      image: '/assets/images/university/bpp.jpeg',
+      image: '/assets/images/university/bpp.webp',
       status: 'Admission Open',
       fees: '(₹) - ₹17 Lakhs',
       applicationDeadline: '15th September',
     },{
       id: '1002',
-      universityLogo: '/assets/images/university/logo/coventry.png',
+      universityLogo: '/assets/images/university/logo/coventry.webp',
       name: 'Coventry University',
-      image: '/assets/images/university/coventry.jpeg',
+      image: '/assets/images/university/coventry.webp',
       status: 'Admission Open',
       fees: '(₹) - ₹16 Lakhs',
       applicationDeadline: '15th Sepember',
     },{
       id: '1003',
-      universityLogo: '/assets/images/university/logo/bpp.jpeg',
+      universityLogo: '/assets/images/university/logo/bpp.webp',
       name: 'University of East London',
-      image: '/assets/images/university/bpp.jpeg',
+      image: '/assets/images/university/bpp.webp',
       status: 'Admission Open',
       fees: '(₹) - ₹13 Lakhs',
       applicationDeadline: '15th Sepember',
@@ -74,23 +74,23 @@ export class HomeComponent implements OnInit {
       id: '1004',
       universityLogo: '/assets/images/university/logo/teesside.webp',
       name: 'Teesside University',
-      image: '/assets/images/university/teesside.jpeg',
+      image: '/assets/images/university/teesside.webp',
       status: 'Admission Open',
       fees: '(₹) - ₹18 Lakhs',
       applicationDeadline: '15th Sepember',
     },{
       id: '1005',
-      universityLogo: '/assets/images/university/logo/manchester.png',
+      universityLogo: '/assets/images/university/logo/manchester.webp',
       name: 'University of Manchester',
-      image: '/assets/images/university/manchester.jpeg',
+      image: '/assets/images/university/manchester.webp',
       status: 'Admission Open',
       fees: '(₹) - ₹16 Lakhs',
       applicationDeadline: '15th Sepember',
     },{
       id: '1006',
-      universityLogo: '/assets/images/university/logo/manchester.png',
+      universityLogo: '/assets/images/university/logo/manchester.webp',
       name: 'BPP University',
-      image: '/assets/images/university/manchester.jpeg',
+      image: '/assets/images/university/manchester.webp',
       status: 'Admission Open',
       fees: '(₹) - ₹17 Lakhs',
       applicationDeadline: '15th Sepember',
