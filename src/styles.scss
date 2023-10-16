@@ -34,5 +34,5 @@ p {@apply text-xs md:text-sm lg:text-base 2xl:text-lg;}
   .slick-dots {@apply w-auto bottom-auto top-5 left-auto right-5;}
 }
 
-.slick-dots li button:before {@apply text-lg text-secondary opacity-100 border-2 border-primary hover:border-white rounded-full leading-4 transition-all duration-300;}
+.slick-dots li button:before {@apply text-base text-secondary opacity-100 hover:border-white rounded-full leading-4 transition-all duration-300;}
 .slick-dots li.slick-active button:before {@apply text-primary opacity-100;}
