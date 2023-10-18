@@ -45,7 +45,7 @@
               <h1 *ngIf="product?.title">{{ product?.title }} <span class="text-primary">{{ product?.colorTitle }}</span></h1>
               <p *ngIf="product?.description">{{ product?.description }}</p>
               <div class="pt-3">
-                <a [href]="product?.btnUrl" class="btn btn-primary block xl:px-16 anim">Check Admit Eligibility</a>
+                <a [routerLink]="product?.btnUrl" class="btn btn-primary block xl:px-16 anim">Check Admit Eligibility</a>
               </div>
             </div>
           </div>
