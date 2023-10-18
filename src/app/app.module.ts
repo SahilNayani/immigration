@@ -9,7 +9,6 @@ import { CarouselModule } from 'primeng/carousel';
 import { RatingModule } from 'primeng/rating';
 import { EligibilityComponent } from './modules/landing/eligibility/eligibility.component';
 import { LandingComponent } from './modules/landing/landing.component';
-import { LandingModule } from './modules/landing/landing.module';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -31,7 +30,6 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     CarouselModule,
     RatingModule,
-    LandingModule,
     DropdownModule,
     BrowserAnimationsModule,
     RadioButtonModule,
