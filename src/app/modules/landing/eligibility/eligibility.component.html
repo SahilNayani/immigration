@@ -23,13 +23,13 @@
             <p-dropdown styleClass="w-full" [formControlName]="'preferredCountry'" [options]="countries" optionLabel="name" [showClear]="true" placeholder="Select a Country" (onClear)="resetForm()" (onChange)="onCountryChange($event)">
               <ng-template pTemplate="selectedItem">
                 <div class="flex items-center gap-4" *ngIf="preferredCountryCtrl.value">
-                  <img *ngIf="preferredCountryCtrl.value && preferredCountryCtrl.value.code != ''" src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.webp" [class]="'flag flag-' + preferredCountryCtrl.value.code.toLowerCase()"/>
+                  <img *ngIf="preferredCountryCtrl.value && preferredCountryCtrl.value.code != ''" src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + preferredCountryCtrl.value.code.toLowerCase()"/>
                   <div>{{ preferredCountryCtrl.value?.name }}</div>
                 </div>
               </ng-template>
               <ng-template let-country pTemplate="item">
                 <div class="flex items-center gap-4">
-                  <img *ngIf="country.code != ''" src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.webp" [class]="'flag flag-' + country.code.toLowerCase()"/>
+                  <img *ngIf="country.code != ''" src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + country.code.toLowerCase()"/>
                   <div>{{ country.name }}</div>
                 </div>
               </ng-template>
