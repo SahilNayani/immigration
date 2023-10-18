@@ -5,21 +5,21 @@ import { HomeComponent } from './modules/landing/home/home.component';
 import { EligibilityComponent } from './modules/landing/eligibility/eligibility.component';
 
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   component: LandingComponent,
+  //   children: [
+  //   ]
+  // },
   {
     path: '',
-    component: LandingComponent,
-    children: [
-      {
-        path: '',
-        component: HomeComponent
-      },{
-        path: 'eligibility',
-        component: EligibilityComponent
-      },{
-        path: 'eligibility/:code',
-        component: EligibilityComponent
-      },
-    ]
+    component: HomeComponent
+  },{
+    path: 'eligibility',
+    component: EligibilityComponent
+  },{
+    path: 'eligibility/:code',
+    component: EligibilityComponent
   },
 ];
 
