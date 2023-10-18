@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
       description: "Are you dreaming of a new life in a foreign land? At Global Gateway Immigration, we specialize in making those dreams a reality. With our expert guidance and comprehensive immigration services, we’re here to help you navigate the complex world of immigration.",
       btnUrl: "/eligibility",
       image: '/assets/images/hero/welcome.webp'
-    },{
+    },/* {
       id: '1002',
       subTitle: "Jan'24 Intake is opening soon!",
       title: "Pursue your advanced degree  and earn your Master's degree in",
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
       description: "Book a free counselling session & find out universities where you can get an admit.",
       btnUrl: "/eligibility/UK",
       image: '/assets/images/hero/uk.webp'
-    },{
+    }, */{
       id: '1003',
       subTitle: "Jan'24 Intake is opening soon!",
       title: "Pursue your advanced degree  and earn your Master's degree in",

@@ -218,6 +218,13 @@ export class EligibilityComponent implements OnInit {
   }
 
   getOtp() {
+    if (this.eligibilityForm.invalid) {
+      Object.keys(this.eligibilityForm.controls).forEach((key) => {
+        this.eligibilityForm.controls[key].touched = true;
+        this.eligibilityForm.controls[key].markAsDirty();
+      });
+      return;
+    }
     this.getOtpPop = !this.getOtpPop;
   }
 
@@ -231,17 +238,17 @@ export class EligibilityComponent implements OnInit {
   
   private _prepareEligibilityForm(eligibilityObj: any = {}): void {
     this.eligibilityForm = this._formBuilder.group({
-      preferredCountry             : [eligibilityObj?.preferredCountry            || '', [Validators.required]],
-      purposeVisit                 : [eligibilityObj?.purposeVisit                || '', [Validators.required]],
-      preferredIntake              : [eligibilityObj?.preferredIntake             || '', [Validators.required]],
-      preferredProgram             : [eligibilityObj?.preferredProgram            || '', [Validators.required]],
-      highestLevelEducation        : [eligibilityObj?.highestLevelEducation       || '', [Validators.required]],
-      grades                       : [eligibilityObj?.grades                      || '', [Validators.required]],
-      highestEducationPassoutYear  : [eligibilityObj?.highestEducationPassoutYear || '', [Validators.required]],
-      passportStatus               : [eligibilityObj?.passportStatus              || '', [Validators.required]],
-      englishTest                  : [eligibilityObj?.englishTest                 || '', [Validators.required]],
-      englishTestGrades            : [eligibilityObj?.englishTestGrades           || '', [Validators.required]],
-      admitStatus                  : [eligibilityObj?.admitStatus                 || '', [Validators.required]],
+      preferredCountry             : [eligibilityObj?.preferredCountry            || ''],
+      purposeVisit                 : [eligibilityObj?.purposeVisit                || ''],
+      preferredIntake              : [eligibilityObj?.preferredIntake             || ''],
+      preferredProgram             : [eligibilityObj?.preferredProgram            || ''],
+      highestLevelEducation        : [eligibilityObj?.highestLevelEducation       || ''],
+      grades                       : [eligibilityObj?.grades                      || ''],
+      highestEducationPassoutYear  : [eligibilityObj?.highestEducationPassoutYear || ''],
+      passportStatus               : [eligibilityObj?.passportStatus              || ''],
+      englishTest                  : [eligibilityObj?.englishTest                 || ''],
+      englishTestGrades            : [eligibilityObj?.englishTestGrades           || ''],
+      admitStatus                  : [eligibilityObj?.admitStatus                 || ''],
       name                         : [eligibilityObj?.name                        || '', [Validators.required]],
       email                        : [eligibilityObj?.email                       || '', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       phone                        : [eligibilityObj?.phone                       || '', [Validators.required]],

@@ -85,7 +85,7 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-wrap" [ngClass]="eligibilityNgModel.preferredProgramModel ? 'fadeIn-left' : 'hidden'" *ngIf="preferredCountryCtrl.value && preferredCountryCtrl.value.name && purposeVisitCtrl.value == 'work_permit' || purposeVisitCtrl.value == 'study'">
+      <div class="flex flex-wrap" [ngClass]="(eligibilityNgModel.preferredProgramModel || eligibilityNgModel.preferredIntakeModel) ? 'fadeIn-left' : 'hidden'" *ngIf="preferredCountryCtrl.value && preferredCountryCtrl.value.name && purposeVisitCtrl.value == 'work_permit' || purposeVisitCtrl.value == 'study'">
         <div class="w-full px-4 pb-5">
           <h3 class="text-xl font-semibold">Education</h3>
         </div>
@@ -104,7 +104,7 @@
             </div>
           </div>
         </div>
-        <div class="w-full px-4" [ngClass]="eligibilityForm.get('highestLevelEducation').value ? 'fadeIn-left' : 'hidden'">
+        <div class="w-full px-4">
           <div class="mb-5">
             <label class="mb-3 block text-base font-medium text-black">
               Percentage
@@ -114,13 +114,13 @@
             </div>
           </div>
         </div>
-        <div class="w-full px-4" [ngClass]="eligibilityNgModel.gradesModel ? 'fadeIn-left' : 'hidden'">
+        <div class="w-full px-4">
           <div class="mb-5">
             <label class="mb-3 block text-base font-medium text-black">
               Year of graduation?
             </label>
             <div class="flex flex-wrap gap-3 w-full">
-              <p-dropdown [options]="graduationYearArr" [formControlName]="'highestEducationPassoutYear'" [(ngModel)]="eligibilityNgModel.highestEducationPassoutYearModel" optionLabel="name" optionValue="value" class="w-full" [styleClass]="'w-full'"></p-dropdown>
+              <p-dropdown [options]="graduationYearArr" [formControlName]="'highestEducationPassoutYear'" [(ngModel)]="eligibilityNgModel.highestEducationPassoutYearModel" placeholder="Select a Year" [showClear]="true" optionLabel="name" optionValue="value" class="w-full" [styleClass]="'w-full'"></p-dropdown>
             </div>
           </div>
         </div>
@@ -170,7 +170,7 @@
             </div>
           </div>
         </div>
-        <div class="w-full px-4" [ngClass]="eligibilityNgModel.englishTestModel ? 'fadeIn-left' : 'hidden'">
+        <div class="w-full px-4" [ngClass]="eligibilityNgModel.passportStatusModel ? 'fadeIn-left' : 'hidden'">
           <div class="mb-5">
             <label class="mb-3 block text-base font-medium text-black">
               Language Grads
@@ -180,7 +180,7 @@
             </div>
           </div>
         </div>
-        <div class="w-full px-4" [ngClass]="eligibilityNgModel.englishTestGradesModel ? 'fadeIn-left' : 'hidden'">
+        <div class="w-full px-4" [ngClass]="eligibilityNgModel.passportStatusModel ? 'fadeIn-left' : 'hidden'">
           <div class="mb-5">
             <label class="mb-3 block text-base font-medium text-black">
               Do you already have a university admit?
@@ -202,7 +202,8 @@
           </div>
         </div>
       </div>
-      <div class="flex flex-wrap" [ngClass]="(preferredCountryCtrl.value && preferredCountryCtrl.value.name && validateEductionForm() || eligibilityNgModel.admitStatusModel) ? 'fadeIn-left' : 'hidden'" *ngIf="preferredCountryCtrl.value && preferredCountryCtrl.value.name && validateEductionForm()">
+      <!-- [ngClass]="(preferredCountryCtrl.value && preferredCountryCtrl.value.name && validateEductionForm() || eligibilityNgModel.admitStatusModel) ? 'fadeIn-left' : 'hidden'" *ngIf="preferredCountryCtrl.value && preferredCountryCtrl.value.name && validateEductionForm()" -->
+      <div class="flex flex-wrap">
         <div class="w-full px-4 pb-5">
           <h3 class="text-xl font-semibold">Contact Details</h3>
         </div>
@@ -213,7 +214,8 @@
             Name
             </label>
             <div class="relative">
-              <input [formControlName]="'name'" type="text" placeholder="Devid Jhon" class="w-full rounded-md border border-form-stroke p-3 pl-12 text-black placeholder-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]">
+              <input [formControlName]="'name'" [(ngModel)]="eligibilityNgModel.nameModel" type="text" placeholder="David John" class="w-full rounded-md border border-form-stroke p-3 pl-12 text-black placeholder-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]"
+              [ngClass]="(eligibilityForm.get('name')?.invalid && (eligibilityForm.get('name')?.dirty && eligibilityForm.get('name')?.touched)) ? 'border-red-500' :''">
               <span class="absolute top-1/2 left-4 -translate-y-1/2">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g opacity="0.8">
@@ -231,7 +233,8 @@
             Email
             </label>
             <div class="relative">
-              <input [formControlName]="'email'" type="email" placeholder="info@yourmai.com" class="w-full rounded-md border border-form-stroke p-3 pl-12 text-black placeholder-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]">
+              <input [formControlName]="'email'" [(ngModel)]="eligibilityNgModel.emailModel" type="email" placeholder="info@yourmai.com" class="w-full rounded-md border border-form-stroke p-3 pl-12 text-black placeholder-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]" 
+              [ngClass]="(eligibilityForm.get('email')?.invalid && (eligibilityForm.get('email')?.dirty && eligibilityForm.get('email')?.touched)) ? 'border-red-500' :''">
               <span class="absolute top-1/2 left-4 -translate-y-1/2">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g opacity="0.8">
@@ -249,7 +252,8 @@
               Contact No.
             </label>
             <div class="relative">
-              <input [formControlName]="'phone'" type="text" placeholder="99663 32255" class="w-full rounded-md border border-form-stroke p-3 pl-12 text-black placeholder-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]">
+              <input [formControlName]="'phone'" [(ngModel)]="eligibilityNgModel.phoneModel" type="text" placeholder="99999 99999" class="w-full rounded-md border border-form-stroke p-3 pl-12 text-black placeholder-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]"
+              [ngClass]="(eligibilityForm.get('phone')?.invalid && (eligibilityForm.get('phone')?.dirty && eligibilityForm.get('phone')?.touched)) ? 'border-red-500' :''">
               <span class="absolute top-1/2 left-4 -translate-y-1/2">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g opacity="0.8">
@@ -263,7 +267,9 @@
         </div>
 
         <div class="w-full">
-          <button class="w-full px-6 py-2.5 text-sm font-medium tracking-wider text-white transition-colors duration-300 transform md:w-auto md:mx-4 focus:outline-none bg-primary rounded-lg hover:bg-gray-700" (click)="getOtp()">Submit</button>
+          <button class="w-full px-6 py-2.5 text-sm font-medium tracking-wider text-white transition-colors duration-300 transform md:w-auto md:mx-4 focus:outline-none bg-primary rounded-lg hover:bg-gray-700"
+           (click)="getOtp()"
+           >Submit</button>
         </div>
       </div>
     </div>
