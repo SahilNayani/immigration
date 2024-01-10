@@ -4,8 +4,10 @@
 
 export const environment = {
   production: true,
-  baseImageURL: "http://localhost:1337/",
-  appURL: "http://localhost:1337/api/",
+  // baseImageURL: "http://localhost:1337/",
+  // appURL: "http://localhost:1337/api/",
+  baseImageURL: "https://api-gt-service.onrender.com/",
+  appURL: "https://api-gt-service.onrender.com/api/",
 };
 /*
  * For easier debugging in development mode, you can import the following file
