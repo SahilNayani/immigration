@@ -188,8 +188,8 @@
             <div class="relative z-20 bg-white">
                 <select [formControlName]="'admitStatus'" [(ngModel)]="eligibilityNgModel.admitStatusModel" class="relative z-20 w-full appearance-none rounded-md border border-form-stroke bg-transparent p-3 text-[#929DA7] outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]">
                   <option value=""></option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
                 </select>
                 <span class="absolute top-1/2 right-4 z-10 -translate-y-1/2">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -267,9 +267,7 @@
         </div>
 
         <div class="w-full">
-          <button class="w-full px-6 py-2.5 text-sm font-medium tracking-wider text-white transition-colors duration-300 transform md:w-auto md:mx-4 focus:outline-none bg-primary rounded-lg hover:bg-gray-700"
-           (click)="getOtp()"
-           >Submit</button>
+          <button class="w-full px-6 py-2.5 text-sm font-medium tracking-wider text-white transition-colors duration-300 transform md:w-auto md:mx-4 focus:outline-none bg-primary rounded-lg hover:bg-gray-700" (click)="sessionFormSubmit()">Submit</button>
         </div>
       </div>
     </div>

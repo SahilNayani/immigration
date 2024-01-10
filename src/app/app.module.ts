@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,17 +16,21 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { ButtonModule } from 'primeng/button';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { GlobalFunctions } from './modules/common/global-functions';
+import { ToastrModule, provideToastr } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     EligibilityComponent,
-    LandingComponent
+    LandingComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     CarouselModule,
@@ -36,12 +40,15 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     RadioButtonModule,
     SelectButtonModule,
     ButtonModule,
-    SlickCarouselModule
+    SlickCarouselModule,
+    ToastrModule.forRoot(), 
   ],
   providers: [
-    {
-      provide: LocationStrategy, useClass: HashLocationStrategy
-    }
+    provideAnimations(),
+    provideToastr(),
+    GlobalFunctions,
+    { provide: LocationStrategy, useClass: HashLocationStrategy, },
+    { provide: Window, useValue: window },
   ],
   bootstrap: [AppComponent]
 })

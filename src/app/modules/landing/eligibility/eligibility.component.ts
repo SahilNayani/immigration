@@ -3,6 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as Aos from 'aos';
 import * as moment from 'moment';
+import { LandingService } from '../landing.service';
+import { GlobalFunctions } from '../../common/global-functions';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-eligibility',
@@ -16,7 +19,8 @@ export class EligibilityComponent implements OnInit {
   eligibilityNgModel: any = {};
   countries: any;
   selectedCountry: any;
-
+  
+  isLoading: boolean = false;
   getOtpPop: boolean = false;
 
   preferredIntake: any = null;
@@ -65,10 +69,14 @@ export class EligibilityComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
+    private _landingService: LandingService,
+    private _globalFunctions: GlobalFunctions,
+    private _toastrService: ToastrService,
   ) { }
 
 
   ngOnInit() {
+    // this.getIp();
     // Aos.init({disable: 'mobile'});//AOS - 2
     Aos.init({duration: 1200,});//AOS - 2
     Aos.refresh();
@@ -228,30 +236,132 @@ export class EligibilityComponent implements OnInit {
     this.getOtpPop = !this.getOtpPop;
   }
 
-  test() {
-    // console.log(this.eligibilityForm.value);
+  // sessionFormSubmit(): any {
+  //   if (this.eligibilityForm.invalid) {
+  //     Object.keys(this.eligibilityForm.controls).forEach((key) => {
+  //       this.eligibilityForm.controls[key].touched = true;
+  //       this.eligibilityForm.controls[key].markAsDirty();
+  //     });
+  //     return;
+  //   }
+  //   const preparedLocationObj: any = this.preparePersonalDetailObj(this.eligibilityForm.value);
+  //   this.isLoading = true;
+  //   this.eligibilityForm.disable();
+  //   this._landingService.query(preparedLocationObj).subscribe((result: any) => {
+  //     if (result) {
+  //       this.isLoading = false;
+  //       this._toastrService.success('Our consultant will connect you soon.', 'Thanks for your interest.');
+  //       this.eligibilityForm.enable();
+  //     } else {
+  //       this.isLoading = false;
+  //       this.eligibilityForm.enable();
+  //       this._globalFunctions.successErrorHandling(result, this, true);
+  //     }
+  //   }, (error: any) => {
+  //     this._globalFunctions.errorHanding(error, this, true);
+  //     this.isLoading = false;
+  //     this.eligibilityForm.enable();
+  //   });
+  // }
+  
+  sessionFormSubmit(): any {
+    if (this.eligibilityForm.invalid) {
+      Object.keys(this.eligibilityForm.controls).forEach((key) => {
+        this.eligibilityForm.controls[key].touched = true;
+        this.eligibilityForm.controls[key].markAsDirty();
+      });
+      return;
+    }    
+    this._landingService.getQueryByEmail(this.eligibilityForm.value.email).subscribe((result: any) => {
+      if (result.data.length > 0) {
+        this.queryUpdate(result.data[0].id);
+      } else {
+        this.queryAdd();
+      }
+    }, (error: any) => {
+      this._globalFunctions.errorHanding(error, this, true);
+      this.isLoading = false;
+      this.eligibilityForm.enable();
+    });
+  }
+
+  queryAdd(): void {
+    this.isLoading = true;
+    this.eligibilityForm.disable();
+    const preparedLocationObj: any = this.preparePersonalDetailObj(this.eligibilityForm.value);
+    this._landingService.query(preparedLocationObj).subscribe((result: any) => {
+      if (result) {
+        this.isLoading = false;
+        this._toastrService.success('Our consultant will connect you soon.', 'Thanks for your interest.');
+        this.eligibilityForm.enable();
+      } else {
+        this.isLoading = false;
+        this.eligibilityForm.enable();
+        this._globalFunctions.successErrorHandling(result, this, true);
+      }
+    }, (error: any) => {
+      this._globalFunctions.errorHanding(error, this, true);
+      this.isLoading = false;
+      this.eligibilityForm.enable();
+    });
+  }
+
+  queryUpdate(updateId: any = ''): void {
+    const preparedLocationObj: any = this.preparePersonalDetailObj(this.eligibilityForm.value);
+    this._landingService.queryUpdate(updateId, preparedLocationObj).subscribe((result: any) => {
+      if (result.data.id) {
+        this.isLoading = false;
+        this._toastrService.success('Our consultant will connect you soon.', 'Thanks for your interest.');
+        this.eligibilityForm.enable();
+      } else {
+        this.isLoading = false;
+        this.eligibilityForm.enable();
+        this._globalFunctions.successErrorHandling(result, this, true);
+      }
+    }, (error: any) => {
+      this._globalFunctions.errorHanding(error, this, true);
+      this.isLoading = false;
+      this.eligibilityForm.enable();
+    });
+  }
+
+  getIp(): any {
+    this._landingService.getIpAddress().subscribe((result: any) => {
+      if (result) {
+        console.log(result?.ip);
+      } else {
+        this._globalFunctions.successErrorHandling(result, this, true);
+      }
+    }, (error: any) => {
+      this._globalFunctions.errorHanding(error, this, true);
+    });
   }
 
   changeValue(field: string = '') {
     this.hideShowFlags[field] = true;
   }
   
-  private _prepareEligibilityForm(eligibilityObj: any = {}): void {
+  private _prepareEligibilityForm(): void {
     this.eligibilityForm = this._formBuilder.group({
-      preferredCountry             : [eligibilityObj?.preferredCountry            || ''],
-      purposeVisit                 : [eligibilityObj?.purposeVisit                || ''],
-      preferredIntake              : [eligibilityObj?.preferredIntake             || ''],
-      preferredProgram             : [eligibilityObj?.preferredProgram            || ''],
-      highestLevelEducation        : [eligibilityObj?.highestLevelEducation       || ''],
-      grades                       : [eligibilityObj?.grades                      || ''],
-      highestEducationPassoutYear  : [eligibilityObj?.highestEducationPassoutYear || ''],
-      passportStatus               : [eligibilityObj?.passportStatus              || ''],
-      englishTest                  : [eligibilityObj?.englishTest                 || ''],
-      englishTestGrades            : [eligibilityObj?.englishTestGrades           || ''],
-      admitStatus                  : [eligibilityObj?.admitStatus                 || ''],
-      name                         : [eligibilityObj?.name                        || '', [Validators.required]],
-      email                        : [eligibilityObj?.email                       || '', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-      phone                        : [eligibilityObj?.phone                       || '', [Validators.required]],
+      preferredCountry             : [],
+      purposeVisit                 : [],
+      preferredIntake              : [],
+      preferredProgram             : [],
+      highestLevelEducation        : [],
+      grades                       : [],
+      highestEducationPassoutYear  : [],
+      passportStatus               : [],
+      englishTest                  : [],
+      englishTestGrades            : [],
+      admitStatus                  : [],
+      name                         : [[Validators.required]],
+      email                        : [[Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+      phone                        : [[Validators.required, Validators.pattern(/^[6789]\d{9}$/)]],
     });
+  }
+
+  preparePersonalDetailObj(personalObj: any = {}): any {
+    const preparedObj: any = personalObj;
+    return {data: preparedObj};
   }
 }

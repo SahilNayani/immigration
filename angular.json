@@ -36,6 +36,7 @@
               "node_modules/aos/dist/aos.css",
               "node_modules/slick-carousel/slick/slick.scss",
               "node_modules/slick-carousel/slick/slick-theme.scss",
+              "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss",
               "src/flags.css"
             ],
@@ -67,7 +68,13 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
